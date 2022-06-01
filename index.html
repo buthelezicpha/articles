@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Lyrics @ gongong</title>
+	<link rel="stylesheet" href="vendor/css/bootstrap.min.css">
+	<link rel="stylesheet" href="vendor/css/swiper.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/responsive.css">
+
+	<!-- favicons -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+
+
+	<style>
+		[x-cloak]{
+			display: none !important;
+		}
+	</style>
+</head>
+<body>
+	<div class="loader">
+		<div class="content">
+			<h1>GONGONG<sup>TM</sup></h1>
+		</div>
+	</div>
+
+	<header class="">
+		<div class="navigation container">
+			<a href="index.html" class="logo">Lyrics @ gongong</a>
+			<div class="menu">
+				<a href="artists.html">Artists</a>
+				<a href="list.html">Lyrics</a>
+				<a href="about.html">About Us</a>
+				<a href="search.html">Search</a>
+				<a href="articles.html">Articles</a>
+			</div>
+			<div class="cta">
+				<a href="https://gongong.live/word/wp-login.php?action=register" class="lyricSubmit btn">Contribute Translations</a>
+			</div>
+		</div>
+		<div class="mobileMenu">
+			<a href="javascript:void(0)">
+				<img src="img/logo.png" alt="" class="img-fluid logo">
+			</a>
+			<a href="javascript:void(0)">Menu</a>
+		</div>
+	</header>
+	<main class="container">
+		<div class="hero">
+			<div class="heroContent">
+				<h1>Amapiano Lyrics</h1>
+				<h3>#AmapianoToTheWorld</h3>
+				<p>Immerse yourself in the authentic South African experience with lyrics to all of your favorite amapiano songs.</p>
+				<a href="javascript:void(0)" class="lyricSubmit btn" data-bs-toggle="modal" data-bs-target="#formModal">Request translations</a>
+			</div>
+			<div class="heroImg">
+				<img src="img/desktop.jpg" alt="" class="img-fluid">
+			</div>
+		</div>
+		<div class="wrapper row">
+
+			<div class="rightSideBar col-12 col-md-3"
+					x-cloak  
+					x-data="{
+						data:[], 
+						searchTerm:'', 
+						'isLoading':true,
+					}" 
+					x-init="fetch('https://gongong.live/word/wp-json/wp/v2/artist')
+						.then(response => response.json())
+						.then(response => {data = response; isLoading= false;});
+
+						">
+				<h4>Newly Added Artists!</h4>
+				<ul x-show="!isLoading">
+					<template x-for="artist in data">
+						<li><a href="#" x-text="artist.title.rendered" x-bind:data-id="artist.id"></a></li>
+					</template>
+				</ul>
+			</div>
+
+			<div class="mainContent col-md-9"
+				x-cloak
+				x-data="{data: [], 'isLoading':true}" 
+				x-init="fetch('https://gongong.live/word/wp-json/wp/v2/lyrical')
+				.then(response => response.json())
+				.then(response => {
+					data = response; 
+					console.log(`${data}`)
+					isLoading= false;
+				});
+
+				$watch('isLoading', value=>{
+					addClassToBody('loaded');
+					reinitializeSwiper()
+					return console.log(value)
+				});">
+
+				<!-- header -->
+				<div class="mainContentHeader">
+					<div class="search">
+						<input type="text" id="search" class="form-control" placeholder="Search">
+						<button type="submit" class="btn searchBtn">Search</button>
+					</div>
+					<div class="filterBy">
+						<div class="dropdown">
+						  <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+						   Filter By
+						  </a>
+						  
+						  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						    <li><a class="dropdown-item" href="#" data-category="latest">Latest</a></li>
+						    <li><a class="dropdown-item" href="#" data-category="hottest">Hottest right now</a></li>
+						    <li><a class="dropdown-item" href="#" data-category="best">Best of all time</a></li>
+						  </ul>
+						</div>
+					</div>
+				</div>
+				
+	
+			<div x-show="!isLoading" class="row">
+				<h2>Newest Tracks</h2>
+				<div class="swiper-container latest">
+					<div class="swiper-wrapper">
+						<template x-for="art in data">
+						<div class="swiper-slide">
+							<div class="song" x-bind:data-id="art.id" x-on:click="fetchLyricById(art.id)">
+								<img :src="art.acf.song_art" alt="" class="img-fluid artistThumb">
+								<p x-text="art.acf.artist[0].post_title" class="songArtist"></p>
+								<p class="track" x-text="art.title.rendered"></p>
+							</div>
+						</div>
+					</template>	
+					</div>
+				</div>
+			</div>
+
+			<!-- <div x-show="!isLoading" class="row">
+				<h2>Trending</h2>
+				<div class="swiper-container trending">
+					<div class="swiper-wrapper">
+						<template x-for="art in data">
+						<div class="swiper-slide">
+							<div class="song" x-bind:data-id="art.id" x-on:click="fetchLyricById(art.id)">
+								<img :src="art.acf.song_art" alt="" class="img-fluid artistThumb">
+								<p x-text="art.acf.artist[0].post_title" class="songArtist"></p>
+								<p class="track" x-text="art.title.rendered"></p>
+							</div>
+						</div>
+					</template>	
+					</div>
+				</div>
+			</div> -->
+
+			</div>
+		</div>
+	</main>
+	
+
+	<footer>
+		<div class="wrapper row">
+			<div class="col-md-6">
+				<div class="copyright">
+					<p><i>copyright &copy; 2020 Gongong Live Media, BSF Concepts, Amakhala Filim</i></p>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="policies">
+					<a href="policies.html#terms">Terms</a>
+					<a href="policies.html#copyright">Copyright Policy</a>
+					<a href="policies.html#privacy-policy">Privacy Policy</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- two -->
+
+<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+      	<form action="https://gongong.live/word/gf/v2/forms/1/submissions" class="form" id="requestForm" method="post">
+      		<div class="mb-3">
+      			<label for="input_1" class="form-label">Full Name</label>
+      			<input type="text" class="form-control" id="input_1" aria-describedby="fullName" name="input_1">
+      			<div id="fullName" class="form-text">Enter your name</div>
+      		</div>
+      		<div class="mb-3">
+      			<label for="input_2" class="form-label">Email address</label>
+      			<input type="email" class="form-control" id="input_2" aria-describedby="emailHelp" name="input_2">
+      			<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      		</div>
+      		<div class="mb-3">
+      			<label for="input_3" class="form-label">Paste the link to the song</label>
+      			<input type="text" class="form-control" name="input_3" id="input_3" aria-describedby="urlHelp">
+      			<div id="urlHelp" class="form-text">This can be a link to a video or streaming service</div>
+      		</div>
+      		<div class="mb-3">
+      			<label for="input_5" class="form-label">Artist's name</label>
+      			<input type="text" class="form-control" name="input_5" id="input_5">
+      		</div>
+
+      		<button type="submit" class="btn lyricSubmit">Submit</button>
+      	</form>
+      </div>   
+    </div>
+  </div>
+</div>
+
+
+	<script src="vendor/js/alpine.js"></script>
+	<script src="vendor/js/bootstrap.bundle.min.js"></script>
+	<script src="vendor/js/swiper.min.js"></script>
+	<script src="vendor/js/locomotive-scroll.min.js"></script>
+	<script src="js/main.js"></script>
+	<script>
+
+	</script>
+	<div class="c-scrollbar"></div>
+</body>
+</html>
+
+

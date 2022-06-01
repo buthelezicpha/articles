@@ -1,0 +1,269 @@
+[
+    {
+        "key": "group_619d1a34a2776",
+        "title": "Artist",
+        "fields": [
+            {
+                "key": "field_619d1bdebea38",
+                "label": "artist profile image",
+                "name": "artist_profile_image",
+                "type": "image",
+                "instructions": "The artists face",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "uploader": "wp",
+                "acfe_thumbnail": 0,
+                "return_format": "url",
+                "preview_size": "thumbnail",
+                "library": "uploadedTo",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": ""
+            },
+            {
+                "key": "field_619d1c65782e1",
+                "label": "tracks",
+                "name": "tracks",
+                "type": "post_object",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "lyrics"
+                ],
+                "taxonomy": [
+                    "category:amapiano"
+                ],
+                "allow_null": 0,
+                "multiple": 1,
+                "return_format": "object",
+                "save_custom": 0,
+                "save_post_status": "publish",
+                "acfe_bidirectional": {
+                    "acfe_bidirectional_enabled": true,
+                    "acfe_bidirectional_related": [
+                        "field_619d25822c4e8"
+                    ]
+                },
+                "ui": 1
+            },
+            {
+                "key": "field_619d25822c4e8",
+                "label": "Featured Artist",
+                "name": "featured_artist",
+                "type": "relationship",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "artist"
+                ],
+                "taxonomy": "",
+                "filters": [
+                    "search",
+                    "post_type",
+                    "taxonomy"
+                ],
+                "elements": "",
+                "min": "",
+                "max": "",
+                "return_format": "object",
+                "acfe_bidirectional": {
+                    "acfe_bidirectional_enabled": "1",
+                    "acfe_bidirectional_related": [
+                        "field_619d1c65782e1"
+                    ]
+                }
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "artist"
+                }
+            ],
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "lyrics"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "left",
+        "instruction_placement": "label",
+        "hide_on_screen": [
+            "permalink",
+            "block_editor",
+            "excerpt",
+            "discussion",
+            "comments",
+            "revisions",
+            "author",
+            "format",
+            "page_attributes",
+            "categories",
+            "tags",
+            "send-trackbacks"
+        ],
+        "active": true,
+        "description": "",
+        "acfe_display_title": "",
+        "acfe_autosync": "",
+        "acfe_form": 0,
+        "acfe_meta": "",
+        "acfe_note": ""
+    },
+    {
+        "key": "group_619524f38a07f",
+        "title": "Song Lyrics",
+        "fields": [
+            {
+                "key": "field_6195250b8f529",
+                "label": "Artist Name",
+                "name": "artist_name",
+                "type": "acfe_post_types",
+                "instructions": "Enter the name of the artist",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "artist"
+                ],
+                "field_type": "select",
+                "default_value": [],
+                "return_format": "object",
+                "allow_null": 0,
+                "multiple": 0,
+                "ui": 0,
+                "choices": [],
+                "ajax": 0,
+                "placeholder": "",
+                "search_placeholder": "",
+                "layout": "",
+                "toggle": 0,
+                "allow_custom": 0
+            },
+            {
+                "key": "field_619525528f52a",
+                "label": "Lyric Track",
+                "name": "lyric_track_",
+                "type": "url",
+                "instructions": "the url of the song in MP3 or WAV format",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_6195259e8f52b",
+                "label": "Track Summary",
+                "name": "track_summary",
+                "type": "text",
+                "instructions": "A summary of the track",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_619526098f52c",
+                "label": "Artist Image",
+                "name": "artist_image",
+                "type": "image",
+                "instructions": "Track art or album art or artist image",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "url",
+                "preview_size": "medium",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "lyrics"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": [
+            "excerpt",
+            "discussion",
+            "comments",
+            "page_attributes",
+            "send-trackbacks"
+        ],
+        "active": true,
+        "description": "",
+        "acfe_display_title": "",
+        "acfe_autosync": "",
+        "acfe_form": 0,
+        "acfe_meta": {
+            "619563187fefc": {
+                "acfe_meta_key": "published",
+                "acfe_meta_value": "Today"
+            }
+        },
+        "acfe_note": ""
+    }
+]

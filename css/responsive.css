@@ -1,0 +1,43 @@
+
+/*big ass phones motherfucker*/
+@media screen and (max-width: 440px){
+	*{
+
+	}
+	
+	.hero{flex-direction: column;}
+	footer .policies{justify-content: flex-start;margin-top: 2em;}
+	footer .policies a{
+		margin: 15px 25px 0px 0px;
+	}
+	
+	a.lyricSubmit{font-size: 0.8rem;}
+	.mainContent{width: auto;}
+	.wrapper{margin: 0;flex-direction: column-reverse;}
+	footer{background-color: #ea5c0a;margin-top: 3em;}
+	.rightSideBar{}
+	.rightSideBar ul{}
+	.mainContent .filterBy{
+		display: none;
+	}
+	.mainContent .search{
+		width: 100%;
+	}
+	.mainContent .search input{}
+}
+
+
+/*iphones motherfucker*/
+@media screen and (max-width: 375px){
+	*{
+
+	}
+}
+
+
+/* low end android phones commons*/
+@media screen and (max-width: 320px){
+	*{
+		
+	}
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Artist Profile</title>
+	<link rel="shortcut icon" href="favicon.ico"/>
+	<link rel="stylesheet" href="vendor/css/bootstrap.min.css">
+	<link rel="stylesheet" href="vendor/css/swiper.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/responsive.css">
+
+	<!-- favicons -->
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
+	<style>
+		[x-cloak]{
+			display: none !important;
+		}
+	</style>	
+</head>
+<body class="profile">
+
+<!-- 	<div class="loader">
+		<div class="content">
+			<h1>GONGONG<sup>TM</sup></h1>
+		</div>
+	</div> -->
+
+
+	<header class="">
+		<div class="navigation container">
+			<a href="index.html" class="logo">Lyrics @ gongong</a>
+			<div class="menu">
+				<a href="artists.html">Artists</a>
+				<a href="list.html">Lyrics</a>
+				<a href="about.html">About Us</a>
+				<a href="search.html">Search</a>
+				<a href="articles.html">Articles</a>
+				<a href="#"></a>
+			</div>
+			<div class="cta">
+				<a href="#" class="lyricSubmit btn" data-bs-toggle="modal" data-bs-target="#formModal">Request Translations</a>
+				<!-- <a href="#" class="clsMenu">Close Menu</a> -->
+			</div>
+		</div>
+		<div class="mobileMenu">
+			<a href="javascript:void(0)">
+				<img src="img/logo.png" alt="" class="img-fluid logo">
+			</a>
+			<a href="javascript:void(0)">Menu</a>
+		</div>
+	</header>
+
+	<main 
+		x-cloak 
+		class="container" 
+		x-data="{artistData: [], 'isLoading':true, tracks: []}" 
+		x-init="artistData = JSON.parse(sessionStorage.getItem('artistProfile')); console.log(artistData);
+		
+		const songs = artistData[0].acf.tracks
+		const keys = Object.keys(songs);
+		keys.forEach((key, index) => {
+    console.log(`${key}: ${songs[key].post_title}`);
+    tracks.push(songs[key])
+});
+isLoading=false
+		">
+	<div x-show="!isLoading">
+		<div class="header row profile">	
+			<img :src="artistData[0].acf.artist_profile_image" alt="" class="img-fluid">
+			<div class="artistInfo">
+				<h3 x-text="artistData[0].title.rendered"></h3>
+				<ul>
+				<template x-for="songs in tracks">
+					<li>
+						<a href="#" x-text="songs.post_title" x-bind:data-id="songs.ID" x-on:click="fetchLyricById(songs.ID)"></a>
+					</li>
+				</template>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	</main>
+	<footer>
+		<div class="wrapper row">
+			<div class="col-md-6">
+				<div class="copyright">
+					<p><i>copyright 2020 Gongong Live Media, BSF Concepts, Amakhala Filim</i></p>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="policies">
+					<a href="policies.html#terms">Terms</a>
+					<a href="policies.html#copyright">Copyright Policy</a>
+					<a href="policies.html#privacy-policy">Privacy Policy</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- gook -->
+	<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+      	<form action="POST" class="form" id="requestForm">
+      		<div class="mb-3">
+      			<label for="fullName" class="form-label">Full Name</label>
+      			<input type="text" class="form-control" id="fullName" aria-describedby="emailHelp" name="fullName">
+      			<!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+      		</div>
+      		<div class="mb-3">
+      			<label for="exampleInputEmail1" class="form-label">Email address</label>
+      			<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      			<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      		</div>
+      		<div class="mb-3">
+      			<label for="exampleInputPassword1" class="form-label">Paste the link to the song</label>
+      			<input type="text" class="form-control" name="link">
+      		</div>
+      		<div class="mb-3">
+      			<label for="exampleInputPassword1" class="form-label">Artist's name</label>
+      			<input type="text" class="form-control" name="link">
+      		</div>
+
+      		<a type="submit" class="btn lyricSubmit">Submit</a>
+      	</form>
+      </div>   
+    </div>
+  </div>
+</div>
+
+
+	<script src="vendor/js/bootstrap.bundle.min.js"></script>
+	<script src="vendor/js/alpine.js"></script>
+	<script src="js/lyrics.js"></script>
+	<script src="js/main.js"></script>
+
+
+</body>
+</html>

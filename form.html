@@ -1,0 +1,17 @@
+<form action="https://api.staticforms.xyz/submit" method="post">
+        <!-- Replace with accesKey sent to your email -->
+        <input type="hidden" name="accessKey" value="e44fc5d0-0b52-4cb1-9f79-fefc3800d89c"> <!-- Required -->
+        <input type="text" name="name"> <!-- Optional -->
+        <input type="text" name="subject"> <!-- Optional -->
+        <input type="text" name="email"> <!-- Optional -->
+        <input type="text" name="phone"> <!-- Optional -->
+        <textarea name="message"></textarea> <!-- Optional -->
+        <!-- If you want replyTo to be set to specific email -->
+        <input type="text" name="replyTo" value="myreplytoemail@example.com"> <!-- Optional -->
+        <!-- Specify @ as reply to value if you want it to be customers email -->
+        <input type="hidden" name="replyTo" value="@"> <!-- Optional -->
+        <!-- If you want form to redirect to a specific url after submission -->
+        <input type="hidden" name="redirectTo" value="https://example.com/contact/success"> <!-- Optional -->
+        <input type="submit" value="Submit" />
+        <input type="text" name="honeypot" style="display: none;"> <!-- Optional -->
+    </form>

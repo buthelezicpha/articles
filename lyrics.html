@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Lyrics</title>
+	<link rel="shortcut icon" href="favicon.ico"/>
+	<link rel="stylesheet" href="vendor/css/bootstrap.min.css">
+	<link rel="stylesheet" href="vendor/css/swiper.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/responsive.css">
+	<link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
+	<style>
+		[x-cloak]{
+			display: none !important;
+		}
+	</style>	
+</head>
+<body class="">
+	<header class="">
+		<div class="navigation container">
+			<a href="index.html" class="logo">Lyrics @ gongong</a>
+			<div class="menu">
+				<a href="artists.html">Artists</a>
+				<a href="list.html">Lyrics</a>
+				<a href="about.html">About Us</a>
+				<a href="search.html">Search</a>
+				<a href="articles.html">Articles</a>
+				<a href="#"></a>
+			</div>
+			<div class="cta">
+				<a href="#" class="lyricSubmit btn" data-bs-toggle="modal" data-bs-target="#formModal">Request Translations</a>
+				<!-- <a href="#" class="clsMenu">Close Menu</a> -->
+			</div>
+		</div>
+		<div class="mobileMenu">
+			<a href="javascript:void(0)">
+				<img src="img/logo.png" alt="" class="img-fluid logo">
+			</a>
+			<a href="javascript:void(0)">Menu</a>
+		</div>
+	</header>
+
+	<main 
+		x-cloak 
+		class="container" 
+		x-data="{lyricData: [], 'isLoading':true}" 
+		x-init="lyricData = JSON.parse(sessionStorage.getItem('result')); isLoading=false; console.log(lyricData)">
+		<div class="header row">
+			<div class="trackSummary col-md-6" x-show="!isLoading">
+				<h1 class="trackName" x-text="lyricData[0].title.rendered"></h1>
+				<template x-for="data in lyricData">
+					<p x-text="data.acf.artist.post_title"></p>
+				</template>
+				<h3 class="artist" x-text="lyricData[0].acf.artist.post_title"></h3>
+				<p class="shortSummary" x-html="lyricData[0].acf.track_summary"></p>
+			</div>
+			<div class="heroImg col-md-6">
+				<img :src="lyricData[0].acf.song_art" alt="" class="img-fluid">
+			</div>
+		</div>
+		<div class="wrapper row">
+			<div class="trackNTitle col-md-12 col-lg-4">
+				<h1 x-text="lyricData[0].title.rendered"></h1>
+				<figure class="trackPlayer">
+
+					<audio controls>
+						<source :src="lyricData[0].acf.lyric_track_" type="audio/mpeg">
+					</audio>
+					<div class="icon"></div>
+					<div class="play"></div>
+					<div class="pause"></div>
+				</figure>
+			</div>
+			<div class="lyricTrans col-md-6 col-12 col-lg-4">
+				<h3>Translation <span>English</span></h3>
+				<div x-show="lyricData[0].acf.lyrics">
+					<div class="lyricsVernacular" x-html="lyricData[0].acf.lyrics"></div>
+				</div>
+				<div x-if="lyricData[0].acf.lyrics == 'undefined'">
+					<a href="https://gongong.live/word/wp-login.php?action=register">We don't have a translation. Translate for us!</a>
+				</div>
+
+			</div>	
+			<div class="lyricTrans col-md-6 col-12 col-lg-4">
+				
+				<h3>Lyrics <span>Vernac &#128512;</span></h3>
+				<div class="lyricsEn" x-html="lyricData[0].content.rendered"></div>
+			</div>
+
+	</div>
+	</main>
+
+
+	<footer>
+		<div class="wrapper row">
+			<div class="col-md-6">
+				<div class="copyright">
+					<p><i>copyright 2020 Gongong Live Media, BSF Concepts, Amakhala Filim</i></p>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="policies">
+					<a href="policies.html#terms">Terms</a>
+					<a href="policies.html#copyright">Copyright Policy</a>
+					<a href="policies.html#privacy-policy">Privacy Policy</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- gook -->
+	<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+      	<form action="POST" class="form" id="requestForm">
+      		<div class="mb-3">
+      			<label for="fullName" class="form-label">Full Name</label>
+      			<input type="text" class="form-control" id="fullName" aria-describedby="emailHelp" name="fullName">
+      			<!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+      		</div>
+      		<div class="mb-3">
+      			<label for="exampleInputEmail1" class="form-label">Email address</label>
+      			<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      			<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      		</div>
+      		<div class="mb-3">
+      			<label for="exampleInputPassword1" class="form-label">Paste the link to the song</label>
+      			<input type="text" class="form-control" name="link">
+      		</div>
+      		<div class="mb-3">
+      			<label for="exampleInputPassword1" class="form-label">Artist's name</label>
+      			<input type="text" class="form-control" name="link">
+      		</div>
+
+      		<a type="submit" class="btn lyricSubmit">Submit</a>
+      	</form>
+      </div>   
+    </div>
+  </div>
+</div>
+
+	<script src="https://cdn.plyr.io/3.6.12/plyr.polyfilled.js"></script>
+	<script src="vendor/js/bootstrap.bundle.min.js"></script>
+	<script src="vendor/js/alpine.js"></script>
+	<script src="js/lyrics.js"></script>
+	<script src="js/main.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>All the lyrics</title>
+	<link rel="stylesheet" href="vendor/css/bootstrap.min.css">
+	<link rel="stylesheet" href="vendor/css/swiper.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/responsive.css">
+	<!-- favicons -->
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
+	
+	<style>
+		[x-cloak]{
+			display: none !important;
+		}
+	</style>	
+</head>
+<body>
+	<header class="">
+		<div class="navigation container">
+			<a href="index.html" class="logo">Lyrics @ gongong</a>
+			<div class="menu">
+				<a href="artists.html">Artists</a>
+				<a href="list.html">Lyrics</a>
+				<a href="about.html">About Us</a>
+				<a href="search.html">Search</a>
+				<a href="articles.html">Articles</a>
+			</div>
+			<div class="cta">
+				<a href="#" class="lyricSubmit btn" data-bs-toggle="modal" data-bs-target="#formModal">Request Translations</a>
+				<!-- <a href="#" class="clsMenu">Close Menu</a> -->
+			</div>
+		</div>
+		<div class="mobileMenu">
+			<a href="javascript:void(0)">
+				<img src="img/logo.png" alt="" class="img-fluid logo">
+			</a>
+			<a href="javascript:void(0)">Menu</a>
+		</div>
+	</header>
+
+	<main 
+
+		x-cloak 
+		class="container" 
+		x-data="{
+			lyrics:[], 
+			searchTerm:'',
+			date:new Date(),
+			'isLoading':true,
+			'isSearchLoading':true, 
+			'postType':'lyrical',
+			searchResults:[],
+			'resReturned':0,
+			'url':'https://gongong.live/word/wp-json/wp/v2/lyrical?search='
+		}" 
+		x-init="fetch('https://gongong.live/word/wp-json/wp/v2/lyrical')
+			.then(response => response.json())
+			.then(response => {lyrics = response; isLoading= false;});
+			$watch('lyrics', value => console.log(value))">
+	<div class="wrapper row">
+		<h4>Search Lyrics</h4>
+		<!-- /wp-json/wp/v2/search/?subtype[]=page&subtype[]=post -->
+		<div class="searchWrapper col-md-4">
+			<input type="text" class="form-control search" x-model="searchTerm">
+			<a href="#" class="btn lyricSubmit" x-on:click="
+			fetch(url + searchTerm)
+			.then(response => response.json())
+			.then(data => { searchResults = data; isSearchLoading=false; isLoading=true; resReturned = data.length; console.log(data)})">
+				Lyric Search
+			</a>
+			<ul x-show="!isSearchLoading" class="resultList">
+				<p><i>You searched for <b><span x-text="searchTerm"></span></b> and we found <span x-text="resReturned"></span> result</i></p>
+				<template x-for="item in searchResults" :key="item.id">
+					<li class="result" x-bind:data-id="item.id" x-on:click="fetchLyricById(item.id)">
+						<a href="#" x-text="item.title.rendered"></a>
+						<span x-text="item.acf.song_art"></span>
+						<!-- <span x-text="date"></span> -->
+					</li>
+				</template>
+			</ul>
+		</div>
+
+
+		<div class="col-md-8" x-show="!isLoading">
+			<ul class="artists">
+				<template x-for="lyric in lyrics">
+					<li x-bind:data-id="lyric.id" x-on:click="fetchLyricById(lyric.id)">
+						<a href="#" x-text="lyric.acf.artist[0].post_title"></a>
+						<p class="fw-bold" x-text="lyric.title.rendered"></p>
+						<!-- <img :src="lyric.acf.artist_image" alt="" class="artistThumb img-fluid"> -->
+					</li>
+				</template>
+			</ul>
+		</div>
+	</div>
+
+	</main>
+	
+
+	<footer>
+		<div class="wrapper row">
+			<div class="col-md-6">
+				<div class="copyright">
+					<p><i>copyright 2020 Gongong Live Media, BSF Concepts, Amakhala Filim</i></p>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="policies">
+					<a href="policies.html#terms">Terms</a>
+					<a href="policies.html#copyright">Copyright Policy</a>
+					<a href="policies.html#privacy-policy">Privacy Policy</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+      	<form action="POST" class="form" id="requestForm">
+      		<div class="mb-3">
+      			<label for="fullName" class="form-label">Full Name</label>
+      			<input type="text" class="form-control" id="fullName" aria-describedby="emailHelp" name="fullName">
+      			<!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+      		</div>
+      		<div class="mb-3">
+      			<label for="exampleInputEmail1" class="form-label">Email address</label>
+      			<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      			<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      		</div>
+      		<div class="mb-3">
+      			<label for="exampleInputPassword1" class="form-label">Paste the link to the song</label>
+      			<input type="text" class="form-control" name="link">
+      		</div>
+      		<div class="mb-3">
+      			<label for="exampleInputPassword1" class="form-label">Artist's name</label>
+      			<input type="text" class="form-control" name="link">
+      		</div>
+
+      		<a type="submit" class="btn lyricSubmit">Submit</a>
+      	</form>
+      </div>   
+    </div>
+  </div>
+</div>
+
+
+
+
+	<script src="vendor/js/bootstrap.bundle.min.js"></script>
+	<script src="vendor/js/alpine.js"></script>
+	<script src="js/lyrics.js"></script>
+	<script src="js/main.js"></script>
+
+</body>
+</html>
